@@ -1,15 +1,15 @@
 package com.pitercapistrano.chatcompose.itemlista
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,17 +20,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.pitercapistrano.chatcompose.R
+import com.pitercapistrano.chatcompose.model.Usuario
 import com.pitercapistrano.chatcompose.ui.theme.Black
-import com.pitercapistrano.chatcompose.ui.theme.LightGray
 import com.pitercapistrano.chatcompose.ui.theme.White
 
 @Composable
-fun UsuarioItem() {
+fun UsuarioItem(
+    listaUsuarios: MutableList<Usuario>,
+    position: Int,
+    context: Context
+) {
+
+    val nome = listaUsuarios[position].nome
+    val fotoUsuario = listaUsuarios[position].foto
 
     ConstraintLayout(
         modifier = Modifier
@@ -40,7 +45,7 @@ fun UsuarioItem() {
         val (txtNome,foto,mensagem,linha) = createRefs()
         
         Image(
-            painter = painterResource(id = R.drawable.usuario1),
+            painter = painterResource(id = fotoUsuario!!),
             contentDescription = "Foto do usuario 1!",
             modifier = Modifier
                 .size(80.dp)
@@ -53,7 +58,7 @@ fun UsuarioItem() {
             )
 
         TextButton(onClick = {
-
+            Toast.makeText(context, "Você clicou no usuário $nome", Toast.LENGTH_SHORT).show()
         },
             colors = ButtonDefaults.buttonColors(
                 containerColor = White,
@@ -66,7 +71,7 @@ fun UsuarioItem() {
             }
         ) {
             Text(
-                text = "Piter Capistrano",
+                text = nome!!,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
             )
@@ -92,10 +97,4 @@ fun UsuarioItem() {
 
         }
     }
-}
-
-@Preview
-@Composable
-fun UsuarioItemPreview(){
-    UsuarioItem()
 }
